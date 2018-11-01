@@ -28,12 +28,14 @@ public class MahasiswaDAOImpl implements MahasiswaDAO {
 
     @Override
     public Mahasiswa save(Mahasiswa param) {
-        String sql = "insert into table_students (namaMhs,alamat) values (?,?)";
+        String sql = "insert into table_students (namaMhs,alamat,idJurusan, idFakultas) values (?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, param.getNamaMhs());
             ps.setString(2, param.getAlamat());
+            ps.setInt(3, param.getIdJurusan());
+            ps.setInt(4,param.getIdFakultas());
             return ps;
         }, keyHolder);
         param.setId(keyHolder.getKey().intValue());
@@ -42,12 +44,14 @@ public class MahasiswaDAOImpl implements MahasiswaDAO {
 
     @Override
     public Mahasiswa update(Mahasiswa param) {
-        String sql = "update table_students set namaMhs=?,alamat=? where id=?";
+        String sql = "update table_students set namaMhs=?,alamat=?, idJurusan=?, idFakultas=? where id=?";
         int rtn = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, param.getNamaMhs());
             ps.setString(2, param.getAlamat());
-            ps.setInt(3, param.getId());
+            ps.setInt(3, param.getIdJurusan());
+            ps.setInt(4, param.getIdFakultas());
+            ps.setInt(5, param.getId());
             return ps;
         });
         param.setId(rtn);
