@@ -1,8 +1,7 @@
 package com.flashdin.belajarspringweb.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Matakuliah extends User implements Serializable {
 

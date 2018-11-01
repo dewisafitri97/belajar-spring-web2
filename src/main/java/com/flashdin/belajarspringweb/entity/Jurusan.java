@@ -2,9 +2,9 @@ package com.flashdin.belajarspringweb.entity;
 
 import java.io.Serializable;
 
-public class Jurusan implements Serializable {
+public class Jurusan extends  User implements Serializable {
 
-    private int id;
+
     private String nama;
     private int idFakultas;
 
@@ -14,16 +14,17 @@ public class Jurusan implements Serializable {
 
     }
 
-    public Jurusan(int id, String nama, int idFakultas){
-        this.id = id;
+    public Jurusan(String nama, int idFakultas){
         this.nama = nama;
         this.idFakultas = idFakultas;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
