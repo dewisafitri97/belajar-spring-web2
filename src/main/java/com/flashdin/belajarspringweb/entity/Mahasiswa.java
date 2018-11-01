@@ -6,10 +6,8 @@ public class Mahasiswa extends User implements Serializable {
 
     private String namaMhs;
     private String alamat;
-    //private int idMakul;
     private int idJurusan;
     private int idFakultas;
-
 
 
     private Jurusan jurusan;
@@ -25,7 +23,7 @@ public class Mahasiswa extends User implements Serializable {
     }
 
     public Mahasiswa( int idJurusan, int idFakultas){
-        //this.idMakul = idMakul;
+
         this.idJurusan = idJurusan;
         this.idFakultas = idFakultas;
     }
@@ -56,13 +54,6 @@ public class Mahasiswa extends User implements Serializable {
         this.alamat = alamat;
     }
 
-//    public int getIdMakul() {
-//        return idMakul;
-//    }
-//
-//    public void setIdMakul(int idMakul) {
-//        this.idMakul = idMakul;
-//    }
 
     public Jurusan getJurusan() {
         return jurusan;
@@ -114,6 +105,8 @@ public class Mahasiswa extends User implements Serializable {
                 "idFakultasl=" + idFakultas +
                 '}';
     }
+
+
 
 
 }
