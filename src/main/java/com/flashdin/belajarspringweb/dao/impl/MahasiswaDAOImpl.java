@@ -1,15 +1,22 @@
 package com.flashdin.belajarspringweb.dao.impl;
 
+import com.flashdin.belajarspringweb.constanta.Table;
 import com.flashdin.belajarspringweb.dao.MahasiswaDAO;
+import com.flashdin.belajarspringweb.entity.Fakultas;
+import com.flashdin.belajarspringweb.entity.Jurusan;
 import com.flashdin.belajarspringweb.entity.Mahasiswa;
+import com.flashdin.belajarspringweb.entity.Matakuliah;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -65,9 +72,51 @@ public class MahasiswaDAOImpl implements MahasiswaDAO {
     }
 
     @Override
-    public List<Mahasiswa> findAll() {
-        String sql = "select * from table_students";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Mahasiswa.class));
+    public List<Mahasiswa> findAll()  {
+//        String sql = "select * from table_students";
+//        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Mahasiswa.class));
+
+        String sql = "SELECT " +
+                "mahasiswa.id AS id, " +
+                "mahasiswa.namaMhs AS namaMhs, " +
+                "mahasiswa.alamat AS alamat, " +
+                "jurusan.id AS idJurusan, " +
+                "jurusan.nama AS namaJurusan, " +
+                "fakultas.id AS idFakultas, " +
+                "fakultas.nama AS namaFakultas " +
+                "FROM " + Table.TABLE_MAHASISWA + " mahasiswa INNER JOIN " + Table.TABLE_JURUSAN +
+                " jurusan ON jurusan.id = mahasiswa.idJurusan " +
+                "INNER JOIN  " + Table.TABLE_FAKULTAS + " fakultas ON fakultas.id = jurusan.idFakultas ";
+
+
+        return jdbcTemplate.query(sql, new RowMapper<Mahasiswa>() {
+            @Override
+            public Mahasiswa mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Mahasiswa mahasiswa=new Mahasiswa();
+
+                mahasiswa.setId(rs.getInt("id"));
+                mahasiswa.setNamaMhs(rs.getString("namaMhs"));
+                mahasiswa.setAlamat(rs.getString("alamat"));
+                mahasiswa.setIdJurusan(rs.getInt("idJurusan"));
+                mahasiswa.setIdFakultas(rs.getInt("idFakultas"));
+
+
+                Jurusan jurusan=new Jurusan();
+                jurusan.setId(rs.getInt("idJurusan"));
+                jurusan.setNama(rs.getString("namaJurusan"));
+                jurusan.setIdFakultas(rs.getInt("idFakultas"));
+
+                Fakultas fakultas=new Fakultas();
+                fakultas.setId(rs.getInt("idFakultas"));
+                fakultas.setNama(rs.getString("namaFakultas"));
+
+                mahasiswa.setFakultas(fakultas);
+                mahasiswa.setJurusan(jurusan);
+
+                return mahasiswa;
+
+            }
+        });
     }
 
     @Override

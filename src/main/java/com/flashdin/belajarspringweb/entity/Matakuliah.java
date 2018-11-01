@@ -1,8 +1,14 @@
 package com.flashdin.belajarspringweb.entity;
 
-public class Matakuliah extends User {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Matakuliah extends User implements Serializable {
 
     private String makul;
+
+//    List<Mahasiswa> daftarMahasiswa = new ArrayList<Mahasiswa>();
 
     public Matakuliah() {
     }
@@ -29,5 +35,19 @@ public class Matakuliah extends User {
         this.makul = makul;
     }
 
+//    public List<Mahasiswa> getDaftarMahasiswa() {
+//        return daftarMahasiswa;
+//    }
+//
+//    public void setDaftarMahasiswa(List<Mahasiswa> daftarMahasiswa) {
+//        this.daftarMahasiswa = daftarMahasiswa;
+//    }
 
+    @Override
+    public String toString() {
+        return "Matakuliah{" +
+                "id=" + id +
+                ", makul='" + makul + '\'' +
+                '}';
+    }
 }
